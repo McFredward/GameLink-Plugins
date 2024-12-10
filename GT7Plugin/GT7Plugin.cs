@@ -1,5 +1,7 @@
 ﻿using GT7Plugin.Properties;
 using PluginHelper;
+
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Net.Sockets;
@@ -63,13 +65,10 @@ namespace GT7Plugin
 
         public string[] GetInputData()
         {
-            string[] inputs = new string[fields.Length];
-
-            for (int i = 0; i < fields.Length; i++)
-            {
-                inputs[i] = fields[i].Name;
-            }
-            return inputs;
+            var inputs = new List<string>();
+            inputs.AddRange(fields.Select(f => f.Name));
+            inputs.Add("Sway");
+            return inputs.ToArray();
         }
 
         public void Init()
@@ -104,6 +103,8 @@ namespace GT7Plugin
             sp.VelocityY = local_velocity.Y;
             sp.VelocityZ = local_velocity.Z;
 
+            Vector3 angularVelocity = new Vector3(sp.AngularVelocityX, sp.AngularVelocityY, sp.AngularVelocityZ);
+            var sway = CalculateCentrifugalAcceleration(local_velocity, angularVelocity);
 
             bool updateSusp = false;
             if (suspStopwatch.ElapsedMilliseconds > 100)
@@ -128,9 +129,11 @@ namespace GT7Plugin
                 }
                 else
                 {
-                    controller.SetInput(i, Convert.ToSingle(fields[i].GetValue(sp)));
+                   controller.SetInput(i, Convert.ToSingle(fields[i].GetValue(sp)));
                 }
             }
+
+            controller.SetInput(fields.Length, sway);
 
         }
 
@@ -151,6 +154,15 @@ namespace GT7Plugin
             string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
             return assembly.GetManifestResourceStream(fullResourceName);
         }
+        public float CalculateCentrifugalAcceleration(Vector3 velocity, Vector3 angularVelocity)
+        {
+            var Fc = velocity.Length() * angularVelocity.Length();
+
+            return Fc * (angularVelocity.Y >= 0 ? 1 : -1);
+
+        }
+
+
 
     }
 }
