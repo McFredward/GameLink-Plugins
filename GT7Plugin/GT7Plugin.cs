@@ -1,4 +1,6 @@
-﻿using PluginHelper;
+﻿using Microsoft.VisualBasic;
+
+using PluginHelper;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Numerics;
@@ -56,9 +58,19 @@ namespace GT7Plugin
 
         public string[] GetInputData() => fields.Select(f => f.Name).ToArray();
 
+        private int inputPort = 33740;
+
         public void Init()
         {
-            listener = new UDPListener();
+            
+
+            if (!int.TryParse(Interaction.InputBox("Enter the incoming data port for Gran Turismo 7 \nLeave default value if its running on the Playstation", "Endpoint", "33740"), out inputPort)
+                || inputPort < 0 || inputPort > 65535)
+            {
+                inputPort = 33740;
+            }
+
+            listener = new UDPListener(inputPort);
             cryptor = new Cryptor();
             listener.OnPacketReceived += Listener_OnPacketReceived;
             suspStopwatch.Restart();
