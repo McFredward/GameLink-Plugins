@@ -38,7 +38,7 @@ namespace GT7Plugin
 
         public string Description => GetString("description.html");
 
-        private string defProfilejson => GetString("DefaultProfile.yawglprofile");
+        private string defProfilejson => GetString("Default.yawglprofile");
 
         private UDPListener listener;
         private Cryptor cryptor;

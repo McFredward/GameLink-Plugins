@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\DefaultProfile.yawglprofile" />
+    <EmbeddedResource Include="Resources\Default.yawglprofile" />
     <EmbeddedResource Include="Resources\description.html" />
     <EmbeddedResource Include="Resources\logo.png" />
     <EmbeddedResource Include="Resources\recent.png" />
