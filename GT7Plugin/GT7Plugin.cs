@@ -15,7 +15,7 @@ namespace GT7Plugin
     [Export(typeof(Game))]
     [ExportMetadata("Name", "Gran Turismo 7")]
     [ExportMetadata("Version", "1.1")]
-    public class GranTurismo7Plugin : Game
+    public class GT7Plugin : Game
     {
         private IProfileManager controller;
         private IMainFormDispatcher dispacther;
