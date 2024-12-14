@@ -6,7 +6,7 @@
     <Nullable>disable</Nullable>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <FileVersion>1.1.0.0</FileVersion>
-    <AssemblyName>$(MSBuildProjectName)_beta</AssemblyName>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\defProfile.yawprofile" />
+    <EmbeddedResource Include="Resources\DefaultProfile.yawglprofile" />
     <EmbeddedResource Include="Resources\description.html" />
     <EmbeddedResource Include="Resources\logo.png" />
     <EmbeddedResource Include="Resources\recent.png" />

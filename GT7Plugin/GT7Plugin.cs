@@ -11,7 +11,7 @@ using Quaternion = System.Numerics.Quaternion;
 namespace GT7Plugin
 {
     [Export(typeof(Game))]
-    [ExportMetadata("Name", "Gran Turismo 7 beta")]
+    [ExportMetadata("Name", "Gran Turismo 7")]
     [ExportMetadata("Version", "1.1")]
     public class GranTurismo7Plugin : Game
     {
@@ -26,7 +26,7 @@ namespace GT7Plugin
 
         public bool PATCH_AVAILABLE => false;
 
-        public string AUTHOR => "YawVR & Trevor Jones";
+        public string AUTHOR => "Trevor Jones";
 
         public Stream Logo => GetStream("logo.png");
 
@@ -36,7 +36,7 @@ namespace GT7Plugin
 
         public string Description => GetString("description.html");
 
-        private string defProfilejson => GetString("defProfile.yawprofile");
+        private string defProfilejson => GetString("DefaultProfile.yawglprofile");
 
         private UDPListener? listener;
         private Cryptor? cryptor;
@@ -158,7 +158,8 @@ namespace GT7Plugin
         {
             var assembly = GetType().Assembly;
             var rr = assembly.GetManifestResourceNames();
-            string fullResourceName = $"{assembly.GetName().Name.Replace("_beta", "")}.Resources.{resourceName}";
+            
+            string fullResourceName = $"{assembly.GetName().Name}.Resources.{resourceName}";
 
             if (!rr.Contains(fullResourceName))
             {
