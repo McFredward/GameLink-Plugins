@@ -40,8 +40,8 @@ namespace GT7Plugin
 
         private string defProfilejson => GetString("DefaultProfile.yawglprofile");
 
-        private UDPListener? listener;
-        private Cryptor? cryptor;
+        private UDPListener listener;
+        private Cryptor cryptor;
         private FieldInfo[] fields = typeof(GT7Output).GetFields();
         private bool _seenPacket = false;
         private Vector3 _previous_local_velocity = new Vector3(0, 0, 0);
@@ -189,17 +189,12 @@ namespace GT7Plugin
             var result = string.Empty;
             try
             {
-                using (var stream = GetStream(resourceName))
+                using var stream = GetStream(resourceName);
+
+                if (stream != null)
                 {
-
-                    if (stream != null)
-                    {
-                        using (var reader = new StreamReader(stream))
-                        {
-                            result = reader.ReadToEnd();
-                        }
-
-                    }
+                    using var reader = new StreamReader(stream);
+                    result = reader.ReadToEnd();
                 }
             }
             catch(Exception e)
